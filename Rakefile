@@ -92,8 +92,14 @@ task :zip => :test do
   system_puts "zip -r -9 bot.zip MyBot.rb lib test"
 end
 
+desc "Tag the current commit as the next submission"
+task :tag do
+  submission_id = `git tag -l|grep submission_|sort|tail -n1`.strip.gsub(/\D/,'').to_i+1
+  system_puts "git tag -a submission_#{submission_id} HEAD -m 'Submission #{submission_id}'"
+end
+
 desc "Archive the current bot and open the bot upload page"
-task :upload => :zip do
+task :upload => [:zip, :tag] do
   system_puts("open http://aichallengebeta.hypertriangle.com/submit.php")
 end
 
