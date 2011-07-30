@@ -2,16 +2,27 @@
 
 == My changes
 
-My main goal is to get a toolchain up and running that does all the things I want with the least amount of effort. I built something like this for Planetwars and liked it.
+My main goal is to get a toolchain up and running that does all the things I want with the least amount of effort. I built something like this for Planet wars and liked it.
 
-* Getting up and running is as easy as issuing a 'rake prepare' in the project root to download all the necessary tools.
-* When you're ready for the tournament, issue a 'rake upload' to create a bot.zip file for your project and open the upload page in a browser.
-* Sanity check a bot on a special map against a test bot to weed out crash bugs by issuing a 'rake test'. This is automatically done before creating a bot.zip file.
+  rake prepare
+
+This prepares your project by automatically downloading all the necessary tools. It is automatically called by any rake task that tries to run your bot, so you don't even need to think about it.
+
+  rake test
+
+Sanity check the bot on a special map against a test bot to weed out crash bugs.
+
+  rake upload
+
+Builds an archive named bot.zip and opens up the bot upload page in a browser. Before this, it runs the 'test' task to prevent obviously broken bots from being uploaded. Uploading a new bot does not really get easier than this.
+
+  rake play
+
+Selects a random map, adds your current bot and then adds random bots until there are enough. Then it plays the match and opens the visualizer afterwards.
 
 == Infrastructure todo
 
 * Tag previous submissions in git, put all submissions in their own directory for inclusion in the local tournaments.
-* Playing a game with the current bot on a random map against random bots is as easy as issuing a 'rake play'.
 * Play local tournaments: match the current bot against the best bots I have available.
 
 == Bot todo
