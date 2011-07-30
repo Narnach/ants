@@ -6,27 +6,32 @@ class Square
 	attr_accessor :row
 	# Which column this square belongs to.
 	attr_accessor :col
-	
+
 	attr_accessor :water, :food, :ai
-	
+
 	def initialize water, food, ant, row, col, ai
 		@water, @food, @ant, @row, @col, @ai = water, food, ant, row, col, ai
 	end
-	
+
 	# Returns true if this square is not water. Square is passable if it's not water, it doesn't contain alive ants and it doesn't contain food.
 	def land?; !@water; end
 	# Returns true if this square is water.
 	def water?; @water; end
 	# Returns true if this square contains food.
 	def food?; @food; end
-	
+
+  # Is the square non-occupied land?
+	def free?
+	  land? && !ant?
+  end
+
 	# Returns true if this square has an alive ant.
 	def ant?; @ant and @ant.alive?; end;
-	
+
 	# Returns a square neighboring this one in given direction.
 	def neighbor direction
 		direction=direction.to_s.upcase.to_sym # canonical: :N, :E, :S, :W
-	
+
 		case direction
 		when :N
 			row, col = @ai.normalize @row-1, @col
@@ -39,7 +44,7 @@ class Square
 		else
 			raise 'incorrect direction'
 		end
-		
+
 		return @ai.map[row][col]
 	end
 end
