@@ -11,6 +11,23 @@ def playgame(options)
   system_puts("tools/playgame.py #{options}")
 end
 
+def next_game_id
+  Dir.glob("replays/*.replay").map{|path| File.basename(path)}.map{|file| file.to_i}.sort.last.to_i + 1
+end
+
+def random_map
+  maps = Dir.glob("tools/maps/symmetric_maps/*.map")
+  maps[rand(maps.size)]
+end
+
+def random_bot_cmd
+  bots = [
+    'ruby MyBot.rb',
+    'python tools/submission_test/TestBot.py'
+  ]
+  bots[rand(bots.size)]
+end
+
 desc "Test the current bot to see if it does not crash."
 task :test => :prepare do
   puts "="*50
@@ -40,6 +57,32 @@ task :test => :prepare do
   puts
   unless ok
     puts "Play-testing did not return status 0, so something went wrong."
+    exit 1
+  end
+end
+
+desc "Test the current bot to see if it does not crash."
+task :play => :prepare do
+  map = random_map()
+  players = File.read(map).split("\n").grep(/players (\d+)/).first.gsub(/\D/,'').to_i
+  p players
+
+  # --capture_errors
+  options = %Q[
+    --strict
+    --verbose
+    --game #{next_game_id()}
+    --map_file #{map}
+    --log_dir replays
+    --log_stderr
+    'ruby MyBot.rb'
+  ].split("\n").map{|line| line.strip}.join(" ")
+  (players-1).times do |n|
+    options << " '#{random_bot_cmd()}'"
+  end
+  ok = playgame(options)
+  unless ok
+    puts "Game engine did not return status 0, so something went wrong."
     exit 1
   end
 end
