@@ -89,7 +89,7 @@ end
 
 desc "Zip the current bot so it's ready for submission"
 task :zip => :test do
-  system_puts "zip -r -9 bot.zip MyBot.rb lib"
+  system_puts "rm -f bot.zip && zip -r -9 bot.zip MyBot.rb lib"
 end
 
 desc "Tag the current commit as the next submission"
