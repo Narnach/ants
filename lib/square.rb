@@ -1,7 +1,7 @@
 # Represent a single field of the map.
 class Square
 	# Ant which sits on this square, or nil. The ant may be dead.
-	attr_accessor :ant
+	attr_accessor :ant, :inbound_ant
 	# Which row this square belongs to.
 	attr_accessor :row
 	# Which column this square belongs to.
@@ -19,10 +19,12 @@ class Square
 	def water?; @water; end
 	# Returns true if this square contains food.
 	def food?; @food; end
+	# Returns true if an ant is moving to this square
+	def inbound_ant?; @inbound_ant; end
 
   # Is the square non-occupied land?
 	def free?
-	  land? && !ant?
+	  land? && !ant? && !inbound_ant?
   end
 
 	# Returns true if this square has an alive ant.
@@ -47,4 +49,10 @@ class Square
 
 		return @ai.map[row][col]
 	end
+
+	def reset
+		self.food=false
+		self.ant=nil
+		self.inbound_ant=nil
+  end
 end

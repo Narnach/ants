@@ -22,7 +22,7 @@ end
 
 ai.run do |ai|
 	# your turn code here
-	
+
 	ai.my_ants.each do |ant|
 		# try to go north, if possible; otherwise try east, south, west.
 		[:N, :E, :S, :W].shuffle.each do |dir|
