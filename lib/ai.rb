@@ -16,6 +16,9 @@ class AI
 	attr_accessor :players
 	# Array of scores of players (you are player 0). Available only after game's over.
 	attr_accessor :score
+	
+	# Return an array of alive ants
+	attr_reader :my_ants, :enemy_ants
 
 	# Initialize a new AI object. Arguments are streams this AI will read from and write to.
 	def initialize stdin=$stdin, stdout=$stdout
@@ -169,8 +172,6 @@ class AI
 		return ret
 	end
 	
-	
-	
 	# call-seq:
 	#   order(ant, direction)
 	#   order(row, col, direction)
@@ -185,14 +186,6 @@ class AI
 			@stdout.puts "o #{row} #{col} #{direction.to_s.upcase}"
 		end
 	end
-	
-	
-	
-	
-	# Returns an array of your alive ants on the gamefield.
-	def my_ants; @my_ants; end
-	# Returns an array of alive enemy ants on the gamefield.
-	def enemy_ants; @enemy_ants; end
 	
 	# If row or col are greater than or equal map width/height, makes them fit the map.
 	#
