@@ -8,7 +8,7 @@ class AI
 	attr_accessor	:turn_number
 	
 	# Game settings. Integers.
-	attr_accessor :loadtime, :turntime, :rows, :cols, :turns, :viewradius2, :attackradius2, :spawnradius2, :seed
+	attr_accessor :loadtime, :turntime, :rows, :cols, :turns, :viewradius2, :attackradius2, :spawnradius2, :seed, :player_seed
 	# Radii, unsquared. Floats.
 	attr_accessor :viewradius, :attackradius, :spawnradius
 	
@@ -44,7 +44,8 @@ class AI
 			:viewradius => @viewradius,
 			:attackradius => @attackradius,
 			:spawnradius => @spawnradius,
-			:seed => @seed
+			:seed => @seed,
+			:player_seed => @player_seed,
 		}.freeze
 	end
 	
@@ -91,6 +92,7 @@ class AI
 			when 'viewradius2'; @viewradius2=value.to_i
 			when 'attackradius2'; @attackradius2=value.to_i
 			when 'spawnradius2'; @spawnradius2=value.to_i
+			when 'player_seed'; @player_seed=value.to_i
 			when 'seed'; @seed=value.to_i
 			else
 				warn "unexpected: #{rd}"
