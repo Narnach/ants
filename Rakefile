@@ -46,7 +46,12 @@ end
 
 desc "Zip the current bot so it's ready for submission"
 task :zip => :test do
-  system_puts "zip bot.zip MyBot.rb lib test"
+  system_puts "zip -r -9 bot.zip MyBot.rb lib test"
+end
+
+desc "Archive the current bot and open the bot upload page"
+task :upload => :zip do
+  system_puts("open http://aichallengebeta.hypertriangle.com/submit.php")
 end
 
 desc "Prepare the working directory to play Ants. Will do nothing if the directory is ready."
