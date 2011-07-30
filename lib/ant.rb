@@ -1,7 +1,3 @@
-# Ants AI Challenge framework
-# by Matma Rex (matma.rex@gmail.com)
-# Released under CC-BY 3.0 license
-
 # Represents a single ant.
 class Ant
 	# Owner of this ant. If it's 0, it's your ant.

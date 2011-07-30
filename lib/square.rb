@@ -1,7 +1,3 @@
-# Ants AI Challenge framework
-# by Matma Rex (matma.rex@gmail.com)
-# Released under CC-BY 3.0 license
-
 # Represent a single field of the map.
 class Square
 	# Ant which sits on this square, or nil. The ant may be dead.

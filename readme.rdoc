@@ -1,0 +1,23 @@
+= AI Contest: Ants bot kit in Ruby
+
+== My changes
+
+My main goal is to get a toolchain up and running that does all the things I want with the least amount of effort. I built something like this for Planetwars and liked it.
+
+* Getting up and running is as easy as issuing a 'rake prepare' in the project root to download all the necessary tools.
+
+== TODO:
+
+* Playing a game with the current bot on a random map against random bots is as easy as issuing a 'rake play'.
+* When you're ready for the tournament, issue a 'rake bundle' to create a bot.zip file for your project.
+* Tag previous submissions in git, put all submissions in their own directory for inclusion in the local tournaments.
+* Play local tournaments: match the current bot against the best bots I have available.
+
+== Assumptions
+
+* I'm using a Mac for development. You may be using a Mac or Linux and things should just work. If you're on Windows, there may be problems you have to resolve.
+* I assume a standard toolchain is available, so that I can use the wget, zip and unzip command line tools for setup/upload preparation.
+
+== The legal stuff
+
+This bot kit is based on the starter package 'Ants AI Challenge framework', which was created by Matma Rex (matma.rex@gmail.com) and is licensed under the CC-BY 3.0 license. The starter package code is the very first commit in this repository. All other changes belong to the committer of a change, unless specified otherwise. All changes by me (Wes 'Narnach' Oldenbeuving) fall under the MIT licensed.
