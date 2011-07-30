@@ -1,5 +1,9 @@
-$:.unshift File.dirname($0)
-require 'ants.rb'
+# Ants AI Challenge framework
+# by Matma Rex (matma.rex@gmail.com)
+# Released under CC-BY 3.0 license
+
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
+require 'ai'
 
 ai=AI.new
 
