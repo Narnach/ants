@@ -15,7 +15,7 @@ ai.run do |ai|
 	ai.my_ants.each do |ant|
 		# try to go north, if possible; otherwise try east, south, west.
 		[:N, :E, :S, :W].each do |dir|
-			if ant.square.neighbor(dir).land?
+			if ant.square.neighbor(dir).free?
 				ant.order dir
 				break
 			end
