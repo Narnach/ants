@@ -5,13 +5,25 @@
 My main goal is to get a toolchain up and running that does all the things I want with the least amount of effort. I built something like this for Planetwars and liked it.
 
 * Getting up and running is as easy as issuing a 'rake prepare' in the project root to download all the necessary tools.
+* When you're ready for the tournament, issue a 'rake upload' to create a bot.zip file for your project and open the upload page in a browser.
+* Sanity check a bot on a special map against a test bot to weed out crash bugs by issuing a 'rake test'. This is automatically done before creating a bot.zip file.
 
-== TODO:
+== Infrastructure todo
 
-* Playing a game with the current bot on a random map against random bots is as easy as issuing a 'rake play'.
-* When you're ready for the tournament, issue a 'rake bundle' to create a bot.zip file for your project.
 * Tag previous submissions in git, put all submissions in their own directory for inclusion in the local tournaments.
+* Playing a game with the current bot on a random map against random bots is as easy as issuing a 'rake play'.
 * Play local tournaments: match the current bot against the best bots I have available.
+
+== Bot todo
+
+Different modules or focused bots for different aspects of a final contest bot:
+
+* Explorer bot: try to get 100% sight on the map using the lowest number of ants
+* Food bot: go grab all the food as fast as possible
+* Attack bot: kill all visible enemy ants, may have to do simple checking to prevent being outnumbered and suiciding on a wall of ants
+* Defend bot: prevent my own bots from getting killed, run away if needed
+* Mixed bot: explore the map, grab food, overwhelm enemy ants while trying not to get defeated myself.
+* Land grab bot: try to block enemy ants from entering an area. Automatically expands the area when enough ants are available. May use walls or patrols or guards to mark the inner area and protect it.
 
 == Assumptions
 
