@@ -5,7 +5,7 @@ class Ant
   # Square this ant sits on.
   attr_accessor :square
 
-  attr_accessor :alive, :ai
+  attr_accessor :alive, :ai, :moved
 
   def initialize alive, owner, square, ai
     @alive, @owner, @square, @ai = alive, owner, square, ai
@@ -20,6 +20,8 @@ class Ant
   def mine?; owner==0; end
   # Equivalent to ant.owner!=0.
   def enemy?; owner!=0; end
+  # Return true if the ant has already moved this turn
+  def moved?; @moved; end
 
   # Returns the row of square this ant is standing at.
   def row; @square.row; end
@@ -28,6 +30,7 @@ class Ant
 
   # Order this ant to go in given direction. Equivalent to ai.order ant, direction.
   def order direction
+    self.moved = true
     self.ai.order self, direction
     self.ai.map[self.row][self.col].inbound_ant = self
   end
