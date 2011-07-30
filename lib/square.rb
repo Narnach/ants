@@ -31,23 +31,24 @@ class Square
   def ant?; @ant and @ant.alive?; end;
 
   # Returns a square neighboring this one in given direction.
-  def neighbor direction
+  def neighbor(direction)
     direction=direction.to_s.upcase.to_sym # canonical: :N, :E, :S, :W
+    row, col = self.row, self.col
 
     case direction
     when :N
-      row, col = @ai.normalize @row-1, @col
+      row-=1
     when :E
-      row, col = @ai.normalize @row, @col+1
+      col+=1
     when :S
-      row, col = @ai.normalize @row+1, @col
+      row+=1
     when :W
-      row, col = @ai.normalize @row, @col-1
+      col-=1
     else
       raise 'incorrect direction'
     end
 
-    return @ai.map[row][col]
+    return @ai.grid.square(row, col)
   end
 
   def reset

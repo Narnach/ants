@@ -1,10 +1,11 @@
 require 'core_ext'
+require 'grid'
 require 'square'
 require 'ant'
 
 class AI
-  # Map, as an array of arrays.
-  attr_accessor :map
+  # Grid that represents the map
+  attr_accessor :grid
   # Number of current turn. If it's 0, we're in setup turn. If it's :game_over, you don't need to give any orders; instead, you can find out the number of players and their scores in this game.
   attr_accessor :turn_number
 
@@ -25,7 +26,7 @@ class AI
   def initialize stdin=$stdin, stdout=$stdout
     @stdin, @stdout = stdin, stdout
 
-    @map=nil
+    @grid=nil
     @turn_number=0
 
     @my_ants=[]
@@ -61,7 +62,7 @@ class AI
     @stdout.puts 'go'
     @stdout.flush
 
-    @map=Array.new(@rows){|row| Array.new(@cols){|col| Square.new false, false, nil, row, col, self } }
+    @grid=Grid.new(self.rows, self.cols, self)
     @did_setup=true
   end
 
@@ -131,12 +132,7 @@ class AI
     end
 
     # reset the map data
-    @map.each do |row|
-      row.each do |square|
-        square.reset
-      end
-    end
-
+    @grid.reset
     @my_ants=[]
     @enemy_ants=[]
 
@@ -144,7 +140,7 @@ class AI
       _, type, row, col, owner = *rd.match(/(w|f|a|d) (\d+) (\d+)(?: (\d+)|)/)
       row, col = row.to_i, col.to_i
       owner = owner.to_i if owner
-      node = self.map(row, col)
+      node = self.grid.square(row, col)
 
       case type
       when 'w'
@@ -177,33 +173,7 @@ class AI
   #   order(ant, direction)
   #
   # Give orders to an ant
-  def order ant, direction
+  def order(ant, direction)
     @stdout.puts "o #{ant.row} #{ant.col} #{direction.to_s.upcase}"
   end
-
-  # If row or col are greater than or equal map width/height, makes them fit the map.
-  #
-  # Handles negative values correctly (it may return a negative value, but always one that is a correct index).
-  #
-  # Returns [row, col].
-  def normalize row, col
-    [row % @rows, col % @cols]
-  end
-
-  def map(row=nil, col=nil)
-    return @map if row.nil? && col.nil?
-    row, col = normalize(row, col)
-    @map[row][col]
-  end
 end
-
-
-
-
-
-
-
-
-
-
-

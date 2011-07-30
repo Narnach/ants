@@ -35,6 +35,8 @@ task :test => :prepare do
   puts "="*50
   puts
   ok = playgame %w[
+    --log_error
+    --log_stderr
     --nolaunch
     --strict
     --capture_errors
