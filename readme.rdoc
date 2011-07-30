@@ -20,9 +20,10 @@ Different modules or focused bots for different aspects of a final contest bot:
 
 * Explorer bot: try to get 100% sight on the map using the lowest number of ants
 * Food bot: go grab all the food as fast as possible
+* Coward bot: run away from enemy ants, can use behavior from explorer and food bot
 * Attack bot: kill all visible enemy ants, may have to do simple checking to prevent being outnumbered and suiciding on a wall of ants
-* Defend bot: prevent my own bots from getting killed, run away if needed
-* Mixed bot: explore the map, grab food, overwhelm enemy ants while trying not to get defeated myself.
+* Defend bot: form groups of ants, overwhelm enemies that come near my ants, run away when outnumbered
+* Balanced bot: explore the map, grab food, overwhelm enemy ants while trying not to get defeated myself.
 * Land grab bot: try to block enemy ants from entering an area. Automatically expands the area when enough ants are available. May use walls or patrols or guards to mark the inner area and protect it.
 
 == Assumptions
