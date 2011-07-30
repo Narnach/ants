@@ -144,24 +144,25 @@ class AI
       _, type, row, col, owner = *rd.match(/(w|f|a|d) (\d+) (\d+)(?: (\d+)|)/)
       row, col = row.to_i, col.to_i
       owner = owner.to_i if owner
+      node = self.map(row, col)
 
       case type
       when 'w'
-        @map[row][col].water=true
+        node.water=true
       when 'f'
-        @map[row][col].food=true
+        node.food=true
       when 'a'
-        a=Ant.new true, owner, @map[row][col], self
-        @map[row][col].ant = a
+        ant=Ant.new(true, owner, node, self)
+        node.ant = ant
 
         if owner==0
-          my_ants.push a
+          my_ants << ant
         else
-          enemy_ants.push a
+          enemy_ants << ant
         end
       when 'd'
-        d=Ant.new false, owner, @map[row][col], self
-        @map[row][col].ant = d
+        dead_ant=Ant.new(false, owner, node, self)
+        node.ant = dead_ant
       when 'r'
         # pass
       else
@@ -187,6 +188,12 @@ class AI
   # Returns [row, col].
   def normalize row, col
     [row % @rows, col % @cols]
+  end
+
+  def map(row=nil, col=nil)
+    return @map if row.nil? && col.nil?
+    row, col = normalize(row, col)
+    @map[row][col]
   end
 end
 
