@@ -32,6 +32,6 @@ class Ant
   def order(direction)
     self.moved = true
     self.ai.order self, direction
-    self.ai.grid.square(self.row, self.col).inbound_ant = self
+    self.ai.grid.square(self.row, self.col).neighbor(direction).inbound_ant = self
   end
 end
