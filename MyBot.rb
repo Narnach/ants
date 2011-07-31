@@ -11,17 +11,18 @@ end
 
 ai.run do |ai|
   # your turn code here
+  agressive = ai.my_ants.size > ai.enemy_ants.size * 1.5
   
   ai.grid.each do |square|
-    if square.ant?
-      if square.ant.enemy?
-        square.apply_height(3, 2)
+    square.apply_height(4,3) if square.ant? && square.ant.mine?
+    if square.ant? && square.ant.enemy?
+      if agressive
+        square.apply_height(-4, 3)
       else
-        square.apply_height(2, 1)
+        square.apply_height(3, 2)
       end
     end
-    square.apply_height(9,0) if square.water?
-    square.apply_height(-3,2) if square.food?
+    square.apply_height(-7,6) if square.food?
   end
 
   ai.my_ants.each do |ant|
