@@ -78,4 +78,49 @@ describe Square do
       grid.square(1,1).flow_directions.should == %w[W E]
     end
   end
+  
+  describe "apply_height" do
+    it "should put down 1 height at range 0" do
+      ai = AI.new
+      grid = Grid.new(5,5, ai)
+      ai.grid = grid
+      square = grid.square(2,2)
+      square.apply_height(1,0)
+      grid.map{|s| s.height}.should == [
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+        [0,0,1,0,0],
+        [0,0,0,0,0],
+        [0,0,0,0,0],
+      ].flatten
+    end
+    it "should put down a small pyramid at range 1" do
+      ai = AI.new
+      grid = Grid.new(5,5, ai)
+      ai.grid = grid
+      square = grid.square(2,2)
+      square.apply_height(2,1)
+      grid.map{|s| s.height}.should == [
+        [0,0,0,0,0],
+        [0,0,1,0,0],
+        [0,1,2,1,0],
+        [0,0,1,0,0],
+        [0,0,0,0,0],
+      ].flatten
+    end
+    it "should put down a larger pyramid at range 2" do
+      ai = AI.new
+      grid = Grid.new(5,5, ai)
+      ai.grid = grid
+      square = grid.square(2,2)
+      square.apply_height(3,2)
+      grid.map{|s| s.height}.should == [
+        [0,0,1,0,0],
+        [0,1,2,1,0],
+        [1,2,3,2,1],
+        [0,1,2,1,0],
+        [0,0,1,0,0],
+      ].flatten
+    end
+  end
 end

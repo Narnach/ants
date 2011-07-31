@@ -23,7 +23,12 @@ Selects a random map, adds your current bot and then adds random bots until ther
 == Bot features
 
 * Collision detection: my ants will not attempt to enter a square with water, an ant, food or an empty land square with a known inbound ant
-* Food proximity detection: if an adjecent square is adjecent to food, go there.
+* Height map-based ant flow. Food acts as an attractor in a short range. Ants act as repulsors in a short range. Ants always move towards the greatest attractor.
+* [Implemented via height map] Food proximity detection: if an adjecent square is adjecent to food, go there.
+* [Implemented via height map] Enemy avoidance: if they don't shoot you, you won't lose points.
+
+== Removed features
+
 
 == Infrastructure todo
 
@@ -41,7 +46,6 @@ Different modules or focused bots for different aspects of a final contest bot:
 * Defend bot: form groups of ants, overwhelm enemies that come near my ants, run away when outnumbered
 * Balanced bot: explore the map, grab food, overwhelm enemy ants while trying not to get defeated myself.
 * Land grab bot: try to block enemy ants from entering an area. Automatically expands the area when enough ants are available. May use walls or patrols or guards to mark the inner area and protect it.
-* Height map bot: use height maps to let ants flow towards food and away from enemies. Put food at depth 3/decay 1, enemy ants at height 3/decay 1, friendly ants at height 2/decay 1, water at height 10/decay 0. Decay indicates how much height is lost based on distance, or how wide of a crater/mountain something makes. Ants will move towards the lowest nearby tile. Use randomized movement for tie-breaking.
 
 == Assumptions
 

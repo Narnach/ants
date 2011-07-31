@@ -1,6 +1,7 @@
 require 'square'
 
 class Grid
+  include Enumerable
   attr_accessor :grid, :rows, :cols
 
   def initialize(rows, cols, ai)
@@ -8,10 +9,18 @@ class Grid
     @grid = Array.new(@rows){|row| Array.new(@cols){|col| Square.new(false, false, nil, row, col, ai) } }
   end
 
+  # Rest all squares to an empty state
   def reset
+    each do |square|
+      square.reset
+    end
+  end
+
+  # Yields each square, row-by-row
+  def each
     @grid.each do |row|
       row.each do |square|
-        square.reset
+        yield square
       end
     end
   end

@@ -11,29 +11,26 @@ end
 
 ai.run do |ai|
   # your turn code here
+  
+  ai.grid.each do |square|
+    if square.ant?
+      if square.ant.enemy?
+        square.apply_height(3, 2)
+      else
+        square.apply_height(2, 1)
+      end
+    end
+    square.apply_height(9,0) if square.water?
+    square.apply_height(-3,2) if square.food?
+  end
 
   ai.my_ants.each do |ant|
     # Don't double-move an ant
     next if ant.moved?
 
-    # Check which way we can actually move
-    possible_directions = %w[N E S W].select {|direction| ant.square.neighbor(direction).free?}.shuffle
-
-    # If there's food next to an adjecent square, move there
-    direction = possible_directions.find{|direction| ant.square.neighbor(direction).food_neighbor?}
-
-    # If there's food two tiles away, go there if we don't already have a direction
-    direction ||= possible_directions.find do |direction|
-      base = ant.square.neighbor(direction)
-      %w[N E S W].find do |direction2|
-        base2 = base.neighbor(direction2)
-        base2.free? && base2.food_neighbor?
-      end
-    end
-
-    # Fall back to pick a random valid direction
-    direction ||= possible_directions.first
-
+    # Use flow to check which direction to go
+    possible_directions = ant.square.flow_directions
+    direction = possible_directions.first
     ant.order(direction) if direction
   end
 end

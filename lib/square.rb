@@ -75,6 +75,30 @@ class Square
   end
 
   def flow_directions
-    %w[N E S W].select{|direction| neighbor(direction).free?}.sort_by {|direction| neighbor(direction).height}
+    %w[N E S W].shuffle.select{|direction| neighbor(direction).free?}.sort_by {|direction| neighbor(direction).height}
+  end
+  
+  def neighbors(directions=nil)
+    directions ||= %w[N E S W]
+    directions.map{|direction| neighbor(direction)}
+  end
+  
+  def apply_height(height, range)
+    falloff = height > 0 ? 1 : -1
+    heights << height
+    if range > 0
+      neighbors.each do |neighbor|
+        neighbor.heights << height - 1*falloff
+      end
+    end
+    if range > 1
+      for x in -2..2
+        y_dist = (2-x.abs)
+        for y in [-y_dist, y_dist].uniq
+          square = @ai.grid.square(row+y, col+x)
+          square.heights << height - 2*falloff
+        end
+      end
+    end
   end
 end
