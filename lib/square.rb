@@ -9,8 +9,12 @@ class Square
 
   attr_accessor :water, :food, :ai
 
+  # Influences for a height map
+  attr_accessor :heights
+
   def initialize(water, food, ant, row, col, ai)
     @water, @food, @ant, @row, @col, @ai = water, food, ant, row, col, ai
+    @heights = Array.new
   end
 
   # Returns true if this square is not water. Square is passable if it's not water, it doesn't contain alive ants and it doesn't contain food.
@@ -63,5 +67,14 @@ class Square
     self.food=false
     self.ant=nil
     self.inbound_ant=nil
+    self.heights.clear
+  end
+
+  def height
+    self.heights.sum.to_i
+  end
+
+  def flow_directions
+    %w[N E S W].select{|direction| neighbor(direction).free?}.sort_by {|direction| neighbor(direction).height}
   end
 end

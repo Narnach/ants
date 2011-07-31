@@ -7,5 +7,9 @@ class Array
     end
     shuffled
   end
+
+  def sum
+    inject{|sum, e| sum + e}
+  end
 end
 
