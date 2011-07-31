@@ -21,6 +21,8 @@ class AI
 
   # Return an array of alive ants
   attr_reader :my_ants, :enemy_ants
+  
+  attr_accessor :log_turn_times
 
   # Initialize a new AI object. Arguments are streams this AI will read from and write to.
   def initialize stdin=$stdin, stdout=$stdout
@@ -72,11 +74,14 @@ class AI
 
     over=false
     until over
+      turn_start = Time.now
       over = read_turn
       yield self
 
       @stdout.puts 'go'
       @stdout.flush
+      turn_time = Time.now - turn_start
+      $stderr.puts "Turn #{@turn_number}: #{turn_time}" if log_turn_times
     end
   end
 

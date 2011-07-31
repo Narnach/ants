@@ -79,7 +79,7 @@ task :play => :prepare do
     --map_file #{map}
     --log_dir replays
     --log_stderr
-    'ruby MyBot.rb'
+    'ruby MyBot.rb --log_turn_times'
   ].split("\n").map{|line| line.strip}.join(" ")
   (players-1).times do |n|
     options << " '#{random_bot_cmd()}'"

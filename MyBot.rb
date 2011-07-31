@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'ai'
 
 ai=AI.new
+ai.log_turn_times = ARGV.include?("--log_turn_times")
 
 ai.setup do |ai|
   # your setup code here, if any
