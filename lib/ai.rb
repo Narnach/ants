@@ -165,7 +165,7 @@ class AI
         dead_ant=Ant.new(false, owner, node, self)
         node.ant = dead_ant
       when 'r'
-        # pass
+        node.food = false
       else
         warn "unexpected: #{rd}"
       end
