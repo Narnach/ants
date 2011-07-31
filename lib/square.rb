@@ -24,7 +24,7 @@ class Square
 
   # Is the square non-occupied land?
   def free?
-    land? && !ant? && !inbound_ant?
+    land? && !ant? && !food? && !inbound_ant?
   end
 
   # Returns true if this square has an alive ant.
