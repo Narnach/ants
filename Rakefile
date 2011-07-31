@@ -25,7 +25,7 @@ def random_bot_cmd
     'ruby MyBot.rb',
     'python tools/submission_test/TestBot.py'
   ]
-  bots += Dir.glob("tools/sample_bots/python/*Bot.py").map{|path| "python #{path}"}
+  bots += Dir.glob("tools/sample_bots/python/*Bot.py").reject{|path| File.basename(path) =~ /Invalid|Timeout|Error/}.map{|path| "python #{path}"}
   
   bots[rand(bots.size)]
 end
