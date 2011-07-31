@@ -85,18 +85,12 @@ class Square
   
   def apply_height(height, range)
     falloff = height > 0 ? 1 : -1
-    heights << height
-    if range > 0
-      neighbors.each do |neighbor|
-        neighbor.heights << height - 1*falloff
-      end
-    end
-    if range > 1
-      for x in -2..2
-        y_dist = (2-x.abs)
+    for rng in 0..range
+      for x in -rng..rng
+        y_dist = (rng-x.abs)
         for y in [-y_dist, y_dist].uniq
           square = @ai.grid.square(row+y, col+x)
-          square.heights << height - 2*falloff
+          square.heights << height - rng*falloff
         end
       end
     end
