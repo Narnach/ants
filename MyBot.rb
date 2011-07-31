@@ -16,11 +16,9 @@ ai.run do |ai|
     next if ant.moved?
     # Try to move to all directions in a random order
     # Randomizing the order prevents getting stuck in a corner
-    [:N, :E, :S, :W].shuffle.each do |dir|
-      if ant.square.neighbor(dir).free?
-        ant.order dir
-        break
-      end
-    end
+    possible_directions = %w[N E S W].select {|direction| ant.square.neighbor(direction).free?}
+    adjecent_to_food = possible_directions.select{|direction| ant.square.neighbor(direction).food_neighbor?}
+    direction = [adjecent_to_food.shuffle, possible_directions.shuffle].flatten.first
+    ant.order(direction) if direction
   end
 end

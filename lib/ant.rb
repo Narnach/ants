@@ -7,7 +7,7 @@ class Ant
 
   attr_accessor :alive, :ai, :moved
 
-  def initialize alive, owner, square, ai
+  def initialize(alive, owner, square, ai)
     @alive, @owner, @square, @ai = alive, owner, square, ai
   end
 
@@ -29,7 +29,7 @@ class Ant
   def col; @square.col; end
 
   # Order this ant to go in given direction. Equivalent to ai.order ant, direction.
-  def order direction
+  def order(direction)
     self.moved = true
     self.ai.order self, direction
     self.ai.grid.square(self.row, self.col).inbound_ant = self

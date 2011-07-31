@@ -9,7 +9,7 @@ class Square
 
   attr_accessor :water, :food, :ai
 
-  def initialize water, food, ant, row, col, ai
+  def initialize(water, food, ant, row, col, ai)
     @water, @food, @ant, @row, @col, @ai = water, food, ant, row, col, ai
   end
 
@@ -24,7 +24,15 @@ class Square
 
   # Is the square non-occupied land?
   def free?
-    land? && !ant? && !food? && !inbound_ant?
+    return false if water?
+    return false if ant?
+    return false if food?
+    return false if inbound_ant?
+    return true
+  end
+
+  def food_neighbor?
+    %w[N E S W].any? {|direction| neighbor(direction).food?}
   end
 
   # Returns true if this square has an alive ant.
