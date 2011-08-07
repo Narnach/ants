@@ -14,12 +14,12 @@ ai.setup do |ai|
 end
 
 ai.run do |ai|
-  agressive = ai.my_ants.size > ai.enemy_ants.size * 2
-  
+  @agressive = ai.my_ants.size > ai.enemy_ants.size * 2
+
   ai.grid.each do |square|
     square.apply_height(4,3) if square.ant? && square.ant.mine?
     if square.ant? && square.ant.enemy?
-      if agressive
+      if @agressive
         square.apply_height(-(@enemy_distance+1), @enemy_distance)
       else
         square.apply_height(@enemy_distance+1, @enemy_distance)
@@ -28,7 +28,8 @@ ai.run do |ai|
     square.apply_height(-(@food_attract_radius+1),@food_attract_radius) if square.food?
   end
 
-  ai.my_ants.each do |ant|
+  ai.my_ants.each_with_index do |ant, index|
+    $stderr.puts "Processing ant: #{index}"
     # Don't double-move an ant
     next if ant.moved?
 

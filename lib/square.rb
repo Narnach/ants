@@ -64,9 +64,9 @@ class Square
   end
 
   def reset
-    self.food=false
-    self.ant=nil
-    self.inbound_ant=nil
+    self.ant = nil
+    self.inbound_ant = nil
+    self.food = false
     self.heights.clear
   end
 
@@ -77,12 +77,12 @@ class Square
   def flow_directions
     %w[N E S W].shuffle.select{|direction| neighbor(direction).free?}.sort_by {|direction| neighbor(direction).height}
   end
-  
+
   def neighbors(directions=nil)
     directions ||= %w[N E S W]
     directions.map{|direction| neighbor(direction)}
   end
-  
+
   def apply_height(height, range)
     falloff = height > 0 ? 1 : -1
     for rng in 0..range

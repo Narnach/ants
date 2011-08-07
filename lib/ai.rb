@@ -91,7 +91,7 @@ class AI
     warn "unexpected: #{rd}" unless rd=='turn 0'
 
     until((rd=@stdin.gets.strip)=='ready')
-      _, name, value = *rd.match(/\A([a-z0-9]+) (\d+)\Z/)
+      _, name, value = *rd.match(/\A(\w+) (\d+)\Z/)
 
       case name
       when 'loadtime'; @loadtime=value.to_i
@@ -136,13 +136,16 @@ class AI
       @turn_number=num.to_i
     end
 
+    # TODO: Keep track of my ants that stay in place or move to another tile, then re-use those Ant objects. This way multi-turn intentions can be stored, like moving to food, doing intelligent scouting, etc.
+    my_old_ants = @my_ants
+
     # reset the map data
     @grid.reset
     @my_ants=[]
     @enemy_ants=[]
 
     until((rd=@stdin.gets.strip)=='go')
-      _, type, row, col, owner = *rd.match(/(w|f|a|d) (\d+) (\d+)(?: (\d+)|)/)
+      _, type, row, col, owner = *rd.match(/([a-z]) (\d+) (\d+)(?: (\d+)|)/)
       row, col = row.to_i, col.to_i
       owner = owner.to_i if owner
       node = self.grid.square(row, col)
@@ -153,17 +156,20 @@ class AI
       when 'f'
         node.food=true
       when 'a'
-        ant=Ant.new(true, owner, node, self)
-        node.ant = ant
+        node.ant = Ant.new(true, owner, node, self) unless node.ant
 
         if owner==0
-          my_ants << ant
+          @my_ants << node.ant
         else
-          enemy_ants << ant
+          @enemy_ants << node.ant
         end
       when 'd'
-        dead_ant=Ant.new(false, owner, node, self)
-        node.ant = dead_ant
+        node.ant = nil
+        # if node.ant
+        #   node.ant.alive = false
+        # else
+        #   node.ant = Ant.new(false, owner, node, self)
+        # end
       when 'r'
         node.food = false
       else

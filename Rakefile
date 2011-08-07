@@ -73,6 +73,8 @@ task :play => :prepare do
 
   # --capture_errors
   options = %Q[
+    --log_input
+    --log_output
     --strict
     --verbose
     --game #{next_game_id()}
